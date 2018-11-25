@@ -40,25 +40,33 @@ VMasker.toNumber("123ac34");
 VMasker.toNumber("-123ac34");
 
 VMasker(document.querySelector("input")).maskPattern();
-VMasker.toPattern();
-VMasker.toPattern();
-VMasker.toPattern();
-VMasker.toPattern();
-VMasker.toPattern();
+VMasker.toPattern(1099911111, "(99) 9999-9999");
+VMasker.toPattern(12122000, "99/99/9999");
+VMasker.toPattern(9991111101, "999.999.999-99");
+VMasker.toPattern('ABC1234', "AAA-9999");
+VMasker.toPattern('09GXXXXXXXXXX', "SS.SS.SSSSS.S.S.SSSSSS");
+VMasker.toPattern('4', {pattern: "(999) 999-9999", placeholder: "x"});
 
-var el = document.querySelector()
-VMasker().maskPattern();
-VMasker().unMask();
+var el = document.querySelector("input")
+VMasker(el).maskPattern("(99) 9999-9999");
+VMasker(el).unMask();
 
-function inputHandler() {}
-var telMask = [];
-var tel = document.querySelector();
-VMasker().maskPattern();
-tel.addEventListener();
-var docMask = [];
+function inputHandler(masks, max, event) {
+  var c = event.target;
+  var v = c.value.replace(/\D/g, '');
+  var m = c.value.length > max ? 1 : 0;
+  VMasker(c).unMask();
+  VMasker(c).maskPattern(masks[m]);
+  c.value = VMasker.toPattern(v, masks[m]);
+}
+var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
+var tel = document.querySelector('#tel');
+VMasker(tel).maskPattern(telMask[0]);
+tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+var docMask = ['999.999.999-999', '99.999.999/9999-99'];
 var doc = document.querySelector('#doc');
-VMasker().maskPattern();
-doc.addEventListener(0;
+VMasker(doc).maskPattern(docMask[0]);
+doc.addEventListener('input', inputHandler.bind(undefined, docMask, 14), false);
 
 if(Meteor.isClient){
   Template.myTemplate.rendered = function(){
